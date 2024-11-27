@@ -17,24 +17,26 @@ class CastospiderSpider(scrapy.Spider):
 
     def parse_subcat(self, response):
         url_cat = response.meta["url_cat"]
-        cat_text = response.meta["cat_text"]
         my_sub_cat = response.css('ul#side-navigation-menu-1 > li > a ')
         my_sub_cat2 = response.css('div._6d8c96a3:nth-child(1) > div:nth-child(3) > a')
 
         if len(my_sub_cat) == 0 and len(my_sub_cat2) == 0:
-            print('end of cat')
+            sub_cat = response.meta["sub_cat"]
+            yield {
+                "url" : sub_cat
+            }
 
         elif len(my_sub_cat) == 0:
             my_sub_cat2 = response.css('div._6d8c96a3:nth-child(1) > div:nth-child(3) > a')
             subcategory2 = my_sub_cat2[0]
             url_sub_cat = url_cat + subcategory2.css('a').attrib['href']
             sub_cat2_text = subcategory2.css('span::text').get()
-            yield response.follow(url_sub_cat, callback=self.parse_subcat, meta={"url_cat" : url_cat, "cat_text" : sub_cat2_text})
+            yield response.follow(url_sub_cat, callback=self.parse_subcat, meta={"url_cat" : url_cat, "cat_text" : sub_cat2_text, "sub_cat": url_sub_cat})
 
         else:
             subcategory = my_sub_cat[0]
             sub_cat_text = subcategory.css('::text').get()
             url_sub_cat = url_cat + subcategory.css('a').attrib['href']
-            yield response.follow(url_sub_cat, callback=self.parse_subcat, meta={"url_cat" : url_cat, "cat_text" : sub_cat_text})
+            yield response.follow(url_sub_cat, callback=self.parse_subcat, meta={"url_cat" : url_cat, "cat_text" : sub_cat_text, "sub_cat": url_sub_cat})
 
     

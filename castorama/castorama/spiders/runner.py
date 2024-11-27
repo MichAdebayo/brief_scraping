@@ -2,7 +2,7 @@ import os
 from scrapy.cmdline import execute
 
 # spider = "castorama_fr__categories"
-spider = "productspider"
+spider = "castospider"
 
 log_directory = f"logs/scraping/{spider}"
 

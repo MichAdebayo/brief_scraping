@@ -63,7 +63,9 @@ DEFAULT_REQUEST_HEADERS = {
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   "castorama.pipelines.CastoramaPipeline": 300,
+   # "castorama.pipelines.CastoramaPipeline": 300,
+   "castorama.pipelines.ProductPipeline": 300,
+   "castorama.pipelines.DuplicatesPipeline": 500,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

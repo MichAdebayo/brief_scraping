@@ -2,7 +2,7 @@ import os
 from scrapy.cmdline import execute
 
 # spider = "castorama_fr__categories"
-spider = "castospider"
+spider = "productspider"
 
 log_directory = f"logs/scraping/{spider}"
 
@@ -27,7 +27,7 @@ try:
         'crawl',
         spider,
         '-o',
-        'categories.csv'
+        'products.csv'
         # '-s',
         # f'LOG_FILE={log_file}'
     ])

@@ -10,4 +10,14 @@ from itemadapter import ItemAdapter
 
 class CastoramaPipeline:
     def process_item(self, item, spider):
+
+        adapter = ItemAdapter(item)
+
+        value = adapter.get("subsubsubcategory")
+        value2 = adapter.get("unique_id")
+        if value == value2:
+            adapter["subsubsubcategory"] = ""
+
+
+
         return item

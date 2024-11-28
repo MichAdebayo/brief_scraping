@@ -27,7 +27,7 @@ try:
         'crawl',
         spider,
         '-o',
-        f'{spider}.csv'
+        'categories.csv'
         # '-s',
         # f'LOG_FILE={log_file}'
     ])

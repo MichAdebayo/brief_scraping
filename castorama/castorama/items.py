@@ -9,4 +9,9 @@ import scrapy
 class CastoramaItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
-    pass
+    url = scrapy.Field()
+    category = scrapy.Field()
+    subcategory = scrapy.Field()
+    subsubcategory = scrapy.Field()
+    subsubsubcategory = scrapy.Field()
+    unique_id = scrapy.Field()

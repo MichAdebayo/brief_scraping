@@ -20,7 +20,7 @@ NEWSPIDER_MODULE = "castorama.spiders"
 ROBOTSTXT_OBEY = True
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
-CONCURRENT_REQUESTS = 16
+CONCURRENT_REQUESTS = 20
 
 # Configure a delay for requests for the same website (default: 0)
 # See https://docs.scrapy.org/en/latest/topics/settings.html#download-delay
@@ -66,6 +66,7 @@ ITEM_PIPELINES = {
    # "castorama.pipelines.CastoramaPipeline": 300,
    "castorama.pipelines.ProductPipeline": 300,
    "castorama.pipelines.DuplicatesPipeline": 500,
+   "castorama.pipelines.OrderPipeline": 700,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

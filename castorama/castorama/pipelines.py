@@ -1,5 +1,6 @@
 from itemadapter import ItemAdapter
 from scrapy.exceptions import DropItem
+import sqlite3
 
 class CastoramaPipeline:
     def process_item(self, item, spider):
@@ -40,3 +41,9 @@ class DuplicatesPipeline:
         else:
             self.ids_seen.add(adapter["unique_id"])
             return item
+    
+class SaveToDatabase():
+    def process_item(self, item, spider):
+        con = sqlite3.connect('castorama.db') 
+        cur = con.cursor()
+        cur.execute("CREATE TABLE categories (category TEXT, is_page_list TEXT,url TEXT);")

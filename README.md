@@ -4,7 +4,7 @@
 
 ## Overview
 
-This repository contains a web scraping solution designed to help BricoSimplon, an e-commerce platform specializing in DIY and home improvement, monitor competitors' pricing strategies. By collecting and analyzing real-time product and category data from competitor websites, this project supports BricoSimplon in optimizing its pricing policies and maintaining competitiveness in the market.
+This repository contains a web scraping solution designed to help BricoSimplon, an e-commerce platform specializing in DIY and home improvement, monitor competitors' pricing strategies. By collecting and analyzing real-time product and category data from competitor websites (in this case, Castorama), this project supports BricoSimplon in optimizing its pricing policies and maintaining competitiveness in the market.
 
 The scraping system was developed using Scrapy, focusing on clean and efficient data extraction, processing, and export. It ensures compliance with ethical scraping practices, avoiding server overload and respecting website policies.
 

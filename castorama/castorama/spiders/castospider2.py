@@ -2,18 +2,29 @@ import scrapy
 from castorama.items import CastoramaItem
 
 class CastospiderSpider(scrapy.Spider):
+    """
+    Spider for scraping category and subcategory information from the Castorama website.
+    Initiates requests from the main page and recursively parses categories and subcategories.
+
+    Attributes:
+        name: The name of the spider.
+        allowed_domains: List of domains allowed for scraping.
+        start_urls: List of URLs to start scraping from.
+    """
     name = "castospider2"
     allowed_domains = ["castorama.fr"]
     start_urls = ["https://www.castorama.fr/"]
 
     def parse(self, response: dict):
-        """_summary_
+        """
+        Parses the main Castorama page to extract product categories and initiates requests for each category.
+        Yields requests to follow category URLs and pass category metadata for further parsing.
 
         Args:
-            response (_type_): _description_
+            response (dict): The response object for the main page.
 
         Yields:
-            _type_: _description_
+            scrapy.Request: A request to follow each product category URL.
         """
         orig_url = "https://www.castorama.fr"
         product_categories = response.css('#megaNav-list\[1\] > li> a')
@@ -25,13 +36,16 @@ class CastospiderSpider(scrapy.Spider):
 
 
     def parse_subcat(self, response):
-        """_summary_
+        """
+        Parses subcategory pages to extract further subcategories or final category information.
+        Yields category details and follows subcategory links for deeper parsing.
 
         Args:
-            response (_type_): _description_
+            response: The response object for the subcategory page.
 
         Yields:
-            _type_: _description_
+            dict: A dictionary containing category information and page type.
+            scrapy.Request: A request to follow subcategory URLs for further parsing.
         """
         url_cat = response.meta["url_cat"]
         my_sub_cat = response.css('ul#side-navigation-menu-1 > li > a ')
@@ -40,7 +54,7 @@ class CastospiderSpider(scrapy.Spider):
         if len(my_sub_cat) == 0 and len(my_sub_cat2) == 0:
             sub_cat = response.meta["sub_cat"]
             text = sub_cat[25:].split('/')
-            if text[3][0:6] == 'cat_id':
+            if text[3][:6] == 'cat_id':
                 text[3] = text[2]
             unique = text[-1]
             yield {
@@ -61,7 +75,7 @@ class CastospiderSpider(scrapy.Spider):
                         "url": url_sub_cat,
                     }
                     yield response.follow(url_sub_cat, callback=self.parse_subcat, meta={"url_cat" : url_cat, "cat_text" : sub_cat_text, "sub_cat": url_sub_cat})
-               
+
             if len(my_sub_cat2) == 0:
                 for subcategory in my_sub_cat:
                     sub_cat_text = subcategory.css('::text').get()

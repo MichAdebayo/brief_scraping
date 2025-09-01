@@ -6,7 +6,7 @@ class CastospiderSpider(scrapy.Spider):
     allowed_domains = ["castorama.fr"]
     start_urls = ["https://www.castorama.fr/"]
 
-    def parse(self, response: dict):
+    def parse(self, response):
         """_summary_
 
         Args:

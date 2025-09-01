@@ -2,18 +2,29 @@ import scrapy
 from castorama.items import CastoramaItem
 
 class CastospiderSpider(scrapy.Spider):
+    """
+    Spider for scraping category and subcategory information from the Castorama website.
+    Initiates requests from the main page and recursively parses categories and subcategories.
+
+    Attributes:
+        name: The name of the spider.
+        allowed_domains: List of domains allowed for scraping.
+        start_urls: List of URLs to start scraping from.
+    """
     name = "castospider"
     allowed_domains = ["castorama.fr"]
     start_urls = ["https://www.castorama.fr/"]
 
     def parse(self, response: dict):
-        """_summary_
+        """
+        Parses the main Castorama page to extract product categories and initiates requests for each category.
+        Yields requests to follow category URLs and pass category metadata for further parsing.
 
         Args:
-            response (_type_): _description_
+            response (dict): The response object for the main page.
 
         Yields:
-            _type_: _description_
+            scrapy.Request: A request to follow each product category URL.
         """
         orig_url = "https://www.castorama.fr"
         product_categories = response.css('#megaNav-list\[1\] > li> a')
@@ -23,15 +34,17 @@ class CastospiderSpider(scrapy.Spider):
             url_cat = orig_url + category.css('a').attrib['href']
             yield response.follow(url_cat, callback=self.parse_subcat, meta={"url_cat" : orig_url, "cat_text": cat_text})
 
-
     def parse_subcat(self, response):
-        """_summary_
+        """Parses subcategory pages to extract category items or follow deeper subcategory links.
+
+        This function yields CastoramaItem objects for final categories and follows subcategory links for further parsing.
 
         Args:
-            response (_type_): _description_
+            response: The response object for the subcategory page.
 
         Yields:
-            _type_: _description_
+            CastoramaItem: An item containing category details for final categories.
+            scrapy.Request: A request to follow subcategory URLs for further parsing.
         """
         url_cat = response.meta["url_cat"]
         my_sub_cat = response.css('ul#side-navigation-menu-1 > li > a ')

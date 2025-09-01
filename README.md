@@ -1,5 +1,7 @@
 # Castorama Web Scraping Project
 
+![Image](https://github.com/user-attachments/assets/20140b4a-4c59-487e-9e5a-92ca9f9a7d16)
+
 ## Overview
 
 This repository contains a web scraping solution designed to help BricoSimplon, an e-commerce platform specializing in DIY and home improvement, monitor competitors' pricing strategies. By collecting and analyzing real-time product and category data from competitor websites, this project supports BricoSimplon in optimizing its pricing policies and maintaining competitiveness in the market.

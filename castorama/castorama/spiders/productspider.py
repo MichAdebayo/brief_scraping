@@ -3,14 +3,25 @@ import csv
 from castorama.items import ProductItem
 
 class ProductspiderSpider(scrapy.Spider):
+    """
+    Spider for scraping product information from the Castorama website.
+    Initiates requests from category URLs and parses product listings and pagination.
+
+    Attributes:
+        name: The name of the spider.
+        allowed_domains: List of domains allowed for scraping.
+    """
     name = "productspider"
     allowed_domains = ["www.castorama.fr"]
     
+    
     def start_requests(self):
-        """_summary_
+        """
+        Reads category URLs from a CSV file and initiates requests for each category.
+        Skips the header row and yields requests with the category URL in the meta data.
 
         Yields:
-            _type_: _description_
+            scrapy.Request: A request for each category URL found in the CSV file.
         """
         with open('categories.csv', 'r') as f:
             reader = csv.reader(f)
@@ -24,16 +35,19 @@ class ProductspiderSpider(scrapy.Spider):
         
 
     def parse(self, response):
-        """_summary_
+        """
+        Parses the product listing page and yields ProductItem objects for each product found.
+        Also follows pagination links to scrape additional product pages.
 
         Args:
-            response (_type_): _description_
+            response: The response object for the current page.
 
         Yields:
-            _type_: _description_
+            ProductItem: An item containing product details for each product found.
+            scrapy.Request: A request to the next page if pagination is present.
         """
         products = response.css('ul#product-lister > li')
-        
+
         for prod in products:
             prod_text = prod.css('p::text').get()
             url = response.meta["url"]
@@ -55,7 +69,7 @@ class ProductspiderSpider(scrapy.Spider):
         next_page = response.css('#Next\ page\ button > a:nth-child(1)::attr(href)').get()
 
         if next_page is not None:
-            next_page_url = "https://www.castorama.fr" + next_page
+            next_page_url = f"https://www.castorama.fr{next_page}"
             yield response.follow(next_page_url, callback=self.parse, meta={"url" : url})
 
         else:

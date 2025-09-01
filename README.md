@@ -110,4 +110,4 @@ Code is modular, making it easy to extend and maintain.
 
 ## Contributors
 
-This project was collaboratively developed and managed by **Michael Adebayo** and **David Scott**.
+This project was collaboratively developed and managed by **Michael Adebayo** ([@MichAdebayo](https://github.com/MichAdebayo))  and **David Scott**([@Daviddavid-sudo](https://github.com/Daviddavid-sudo)).

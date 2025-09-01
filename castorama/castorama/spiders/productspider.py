@@ -14,7 +14,6 @@ class ProductspiderSpider(scrapy.Spider):
     name = "productspider"
     allowed_domains = ["www.castorama.fr"]
     
-    
     def start_requests(self):
         """
         Reads category URLs from a CSV file and initiates requests for each category.
@@ -32,7 +31,6 @@ class ProductspiderSpider(scrapy.Spider):
                         callback=self.parse,
                         meta={"url" : row[-1]}
                     )
-        
 
     def parse(self, response):
         """
